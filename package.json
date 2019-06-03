@@ -1,5 +1,5 @@
 {
-  "name": "sebu-js",
+  "name": "sebu",
   "version": "1.0.0",
   "description": "le Rôliste",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PictElm/sebu-js.git"
+    "url": "git+https://github.com/PictElm/sebu.git"
   },
   "keywords": [
     "jdr",
@@ -19,9 +19,9 @@
   "author": "Grenier Célestin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/PictElm/sebu-js/issues"
+    "url": "https://github.com/PictElm/sebu/issues"
   },
-  "homepage": "https://github.com/PictElm/sebu-js#readme",
+  "homepage": "https://github.com/PictElm/sebu#readme",
   "dependencies": {
     "mysql": "^2.17.1"
   }
