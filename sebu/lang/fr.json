@@ -18,12 +18,13 @@
             "chara": "%0 est un personage.",
             "place": "%0 est un lieu.",
             "item": "%0 est un objet.",
-            "alias": "\"@%0\" => \"%1\"",
+            "alias": "\"%1\", alias \"@%0\"",
             "all": {
-                "charas": "TODO",
-                "places": "TODO",
-                "items": "TODO",
-                "alias": "TODO"
+                "charas": "%0 est un personage.",
+                "places": "%0 est un lieu.",
+                "items": "%0 est un objet.",
+                "alias": "\"%1\", alias \"@%0\"",
+                "empty": "Il n'y en a pas..."
             }
         },
         "create": {

@@ -34,7 +34,7 @@ exports.Engine = class Sebu {
         return false;
     }
 
-    async aliasReplace(message) {
+    aliasReplace(message) {
         return message; //.replace(/\@(.*?) /, (m, k) => await this.helper.select('Alias', { key: k })[0]);
     }
 
@@ -60,10 +60,9 @@ exports.Engine = class Sebu {
 
             if (comm.c instanceof Function) {
                 try {
-                    //comm.name = `this.commands.${args.slice(0, k).join(".")}`;
                     comm.args = this.aliasReplace(args.slice(k + 1).join(" "));
-                    this.helper.log('pre', `${comm.name} (${comm.args})`);
-                    return comm.c(this.helper, comm.args, (t, v) => output(this.helper.format(t, v)), this.dico);
+                    this.helper.log('pre', `${comm.name} ( ${comm.args} )`);
+                    return comm.c(this.helper, comm.args, (t, ...v) => output(this.helper.format(t, ...v)), this.dico);
                 } catch (err) {
                     this.helper.log('pro', err)
                     return output(this.helper.format(this.dico.msg.error.internal, err));
@@ -95,23 +94,23 @@ exports.Engine = class Sebu {
                 },
                 all: {
                     charas: function (q, m, o, d) {
-                        q.select('Charas').then(r => o(JSON.stringify(r)));
+                        q.select('Charas').then(r => r.length ? r.forEach(v => o(d.on.detail.all.charas, v.name)) : o(d.on.detail.all.empty));
                     },
                     places: function (q, m, o, d) {
-                        q.select('Places').then(r => o(JSON.stringify(r)));
+                        q.select('Places').then(r => r.length ? r.forEach(v => o(d.on.detail.all.places, v.name)) : o(d.on.detail.all.empty));
                     },
                     items: function (q, m, o, d) {
-                        q.select('Items').then(r => o(JSON.stringify(r)));
+                        q.select('Items').then(r => r.length ? r.forEach(v => o(d.on.detail.all.items, v.name)) : o(d.on.detail.all.empty));
                     },
                     alias: function (q, m, o, d) {
-                        q.select('Alias').then(r => o(JSON.stringify(r)));
+                        q.select('Alias').then(r => r.length ? r.forEach(v => o(d.on.detail.all.alias, v.key, v.value)) : o(d.on.detail.all.empty));
                     }
                 },
                 everything: function (q, m, o, d) { // TODO: untested
-                    q.select('Charas').then(r => o(JSON.stringify(r)));
-                    q.select('Places').then(r => o(JSON.stringify(r)));
-                    q.select('Items').then(r => o(JSON.stringify(r)));
-                    q.select('Alias').then(r => o(JSON.stringify(r)));
+                    q.select('Charas').then(r => r.length ? r.forEach(v => o(d.on.detail.all.charas, v.name)) : o(d.on.detail.all.empty));
+                    q.select('Places').then(r => r.length ? r.forEach(v => o(d.on.detail.all.place, v.name)) : o(d.on.detail.all.empty));
+                    q.select('Items').then(r => r.length ? r.forEach(v => o(d.on.detail.all.items, v.name)) : o(d.on.detail.all.empty));
+                    q.select('Alias').then(r => r.length ? r.forEach(v => o(d.on.detail.all.alias, v.key, v.value)) : o(d.on.detail.all.empty));
                 }
             },
             create: {
