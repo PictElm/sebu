@@ -1,0 +1,77 @@
+{
+    "help": "501, vas lire le pu**** de code",
+    "msg": {
+        "hi": "Salut !",
+        "lang": {
+            "missing": "Traduction en %0 non trouvable.",
+            "empty": "Fichier de traduction en %0 vide."
+        },
+        "error": {
+            "command": {
+                "missing": "Commande non trouvée."
+            },
+            "internal": "Erreur interne \"%0\"."
+        }
+    },
+    "on": {
+        "detail": {
+            "chara": "%0 est un personage.",
+            "place": "%0 est un lieu.",
+            "item": "%0 est un objet.",
+            "alias": "\"@%0\" => \"%1\"",
+            "all": {
+                "charas": "TODO",
+                "places": "TODO",
+                "items": "TODO",
+                "alias": "TODO"
+            }
+        },
+        "create": {
+            "chara": "%0 rejoint la partie!",
+            "place": "%0 est maintenant un quelque part!",
+            "item": {
+                "new": "%0x nouveaux %1 on été crées!",
+                "old": "Il existe maintenant %0x %1 au total."
+            },
+            "alias": "Tu peut maintenant utiliser \"@%0\" à la place de \"%1\""
+        },
+        "remove": {
+            "chara": "%0 quite la partie.",
+            "place": "%0 est seulement un souvenir.",
+            "item": "%0x %1 ont été détruit.",
+            "alias": "%0 ne désigne plus rien.",
+            "all": {
+                "charas": "Nantissement des peuples du monde.",
+                "places": "Nantissement du monde lui-même.",
+                "items": "Il ne rest rien.",
+                "alias": "..."
+            },
+            "everything": "Nouvel univers vide."
+        },
+        "give": {
+            "new": "%0 reçoit %1x %2.",
+            "old": "%0 a maintenant %1x %2."
+        },
+        "move": {
+            "new": "%0 s'est déplacé vers %1",
+            "old": "%0 est déjà à %1"
+        },
+        "done": "Fait !"
+    },
+    "c": {
+        "*": "everything",
+        "detailer": "detail",
+           "creer": "create",
+          "donner": "give",
+        "deplacer": "move",
+           "perso": "chara",
+            "lieu": "place",
+           "objet": "item",
+          "persos": "charas",
+           "lieux": "places",
+          "objets": "items",
+          "chaque": "all",
+            "tout": "everything",
+          "editer": "edit"
+    }
+}

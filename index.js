@@ -1,26 +1,14 @@
-var mysql = require('mysql');
-
-var conn = mysql.createConnection({
-    host: "localhost",
-    database: "sebu",
-    user: "root",
-    password: ""
-});
-
-conn.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-
-    conn.query("SELECT * FROM Characters", function(err, result) {
-        if (err) throw err;
-        console.log("Result: \n" + JSON.stringify(result, null, 2));
-    });
-});
+const that = require('./sebu/that.js');
+var engine = new that.Engine("sebu");
 
 process.stdin.setEncoding('utf-8');
 process.stdin.on('data', function(data) {
-    if(data.startsWith("exit")) {
+    data = data.substring(0, data.length - 2);
+    if (data.startsWith("exit")) {
         console.log("User input complete, program exit.");
+        engine.stop();
         process.exit();
-    } else console.log("User Input Data : '" + data.substring(0, data.length - 1) + "'");
+    } else engine.process(data, message => console.log(`<sebu>: ${message}`));
 });
+
+/*-*/

@@ -1,0 +1,96 @@
+DROP TABLE IF EXISTS `Is`;
+DROP TABLE IF EXISTS `Flags`;
+DROP TABLE IF EXISTS `Relations`;
+DROP TABLE IF EXISTS `In`;
+DROP TABLE IF EXISTS `Groups`;
+DROP TABLE IF EXISTS `Have`;
+DROP TABLE IF EXISTS `Items`;
+DROP TABLE IF EXISTS `Charas`;
+DROP TABLE IF EXISTS `Places`;
+DROP TABLE IF EXISTS `Alias`;
+
+CREATE TABLE `Alias` (
+  `key` VARCHAR(255) NOT NULL PRIMARY KEY,
+  `value` VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `Places` (
+  `name` VARCHAR(255) NOT NULL PRIMARY KEY,
+  `desc` TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `Charas` (
+  `name` VARCHAR(255) NOT NULL PRIMARY KEY,
+  `desc` TEXT,
+
+  `place` VARCHAR(255),
+
+  FOREIGN KEY (`place`) REFERENCES `Places` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `Items` (
+  `name` VARCHAR(255) NOT NULL PRIMARY KEY,
+  `desc` TEXT,
+
+  `total` INTEGER DEFAULT 1 NOT NULL,
+  `left` INTEGER DEFAULT 1 NOT NULL,
+
+  `place` VARCHAR(255),
+
+  `trigger` ENUM("place", "usage") NOT NULL,
+  `action` TEXT,
+
+  FOREIGN KEY (`place`) REFERENCES `Places` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `Have` (
+  `chara` VARCHAR(255) NOT NULL,
+  `item` VARCHAR(255) NOT NULL,
+
+  `count` INTEGER DEFAULT 1 NOT NULL,
+  `skill` INTEGER DEFAULT 100 NOT NULL,
+
+  PRIMARY KEY (`chara`, `item`),
+  FOREIGN KEY (`chara`) REFERENCES `Charas` (`name`),
+  FOREIGN KEY (`item`) REFERENCES `Items` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `Groups` (
+  `name` VARCHAR(255) NOT NULL PRIMARY KEY,
+  `desc` TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `In` (
+  `chara` VARCHAR(255) NOT NULL,
+  `group` VARCHAR(255) NOT NULL,
+
+  PRIMARY KEY (`chara`, `group`),
+  FOREIGN KEY (`chara`) REFERENCES `Charas` (`name`),
+  FOREIGN KEY (`group`) REFERENCES `Groups` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `Relations` (
+  `chara1` VARCHAR(255) NOT NULL,
+  `chara2` VARCHAR(255) NOT NULL,
+
+  `name` VARCHAR(255) NOT NULL,
+  `desc` TEXT,
+
+  PRIMARY KEY (`chara1`, `chara2`),
+  FOREIGN KEY (`chara1`) REFERENCES `Charas` (`name`),
+  FOREIGN KEY (`chara2`) REFERENCES `Charas` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `Flags` (
+  `name` VARCHAR(255) NOT NULL PRIMARY KEY,
+  `desc` TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `Is` (
+  `chara` VARCHAR(255) NOT NULL,
+  `flag` VARCHAR(255) NOT NULL,
+
+  PRIMARY KEY (`chara`, `flag`),
+  FOREIGN KEY (`chara`) REFERENCES `Charas` (`name`),
+  FOREIGN KEY (`flag`) REFERENCES `Flags` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

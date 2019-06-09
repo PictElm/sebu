@@ -1,0 +1,64 @@
+{
+    "help": "501, go read the fu**** code",
+    "msg": {
+        "hi": "Hi!",
+        "lang": {
+            "missing": "Translation to %0 not found.",
+            "empty": "Translation file to %0 is empty."
+        },
+        "error": {
+            "command": {
+                "missing": "Command not found."
+            },
+            "internal": "Internal error \"%0\"."
+        }
+    },
+    "on": {
+        "detail": {
+            "chara": "%0 is a character.",
+            "place": "%0 is a place.",
+            "item": "%0 is an item.",
+            "alias": "\"@%0\" => \"%1\"",
+            "all": {
+                "charas": "TODO",
+                "places": "TODO",
+                "items": "TODO",
+                "alias": "TODO"
+            }
+        },
+        "create": {
+            "chara": "%0 joined the game!",
+            "place": "%0 is now a somewhere!",
+            "item": {
+                "new": "%0x new %1 created!",
+                "old": "There exist now %0x %1 in total."
+            },
+            "alias": "You can now use \"@%0\" instead of \"%1\""
+        },
+        "remove": {
+            "chara": "%0 left the game.",
+            "place": "%0 is only a memory.",
+            "item": "%0x %1 were destroyed.",
+            "alias": "%0 no longer designate anything.",
+            "all": {
+                "charas": "Wiped the world of its people.",
+                "places": "Wiped the world of itself.",
+                "items": "Nothing's left.",
+                "alias": "..."
+            },
+            "everything": "New empty universe."
+        },
+        "give": {
+            "new": "%0 receive %1x %2.",
+            "old": "%0 now have %1x %2."
+        },
+        "move": {
+            "new": "%0 moved to %1",
+            "old": "%0 is already in %1"
+        },
+        "done": "Done!"
+    },
+    "c": {
+        "*": "everything"
+    }
+}
