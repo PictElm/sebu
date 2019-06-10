@@ -8,7 +8,7 @@ process.stdin.on('data', function(data) {
         console.log("User input complete, program exit.");
         engine.stop();
         process.exit();
-    } else engine.process(data, message => console.log(`<sebu>: ${message}`));
+    } else engine.process(data, message => console.log(`<sebu>: ${message.replace("\n", "\n        ")}`));
 });
 
 /*-*/

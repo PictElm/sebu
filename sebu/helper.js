@@ -59,7 +59,7 @@ module.exports = class Helper {
     format(template, ...values) { // TODO: highly optimisable
         //for (let k in values)
         //    template = template.replace("%" + k, values[k])
-        return template.toString()
+        return (template || "").toString()
                 .replace(/%([0-9]+)/g, (m, k) => values[k] || m).replace("%%", "%")
                 .replace(/\$([0-9]+)/g, "\x1b[$1m").replace("$$", "$");
     }
@@ -112,7 +112,7 @@ module.exports = class Helper {
     async update(table, where, obj) {
         let paires = [];
         for (let key in obj)
-            paires.push(`\`${key}\` = ${obj[key]}`);
+            paires.push(`\`${key}\` = '${obj[key]}'`);
 
         return this.query(`UPDATE ${table} SET ${paires.join(", ")} ${this.where(where)}`);
     }
