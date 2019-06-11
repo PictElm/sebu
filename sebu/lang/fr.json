@@ -4,14 +4,13 @@
         "hi": "Salut !",
         "lang": {
             "missing": "Traduction en %0 non trouvable.",
-            "empty": "Fichier de traduction en %0 vide."
+            "empty": "Fichier de traduction en %0 vide.",
+            "untranslated": "Traduction manquante pour '%0'."
         },
-        "error": {
-            "command": {
-                "missing": "Commande non trouvée."
-            },
-            "internal": "Erreur interne \"%0\"."
-        }
+        "command": {
+            "missing": "Commande non trouvée."
+        },
+        "error": "Erreur interne \"%0\"."
     },
     "on": {
         "detail": {
@@ -57,7 +56,7 @@
             "new": "%0 s'est déplacé vers %1",
             "old": "%0 est déjà à %1"
         },
-        "done": "Fait !"
+        "done": "Fait ! (%&)"
     },
     "c": {
         "*": "everything",

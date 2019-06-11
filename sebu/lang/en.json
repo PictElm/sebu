@@ -4,14 +4,13 @@
         "hi": "Hi!",
         "lang": {
             "missing": "Translation to %0 not found.",
-            "empty": "Translation file to %0 is empty."
+            "empty": "Translation file to %0 is empty.",
+            "untranslated": "Missing translation for '%0'."
         },
-        "error": {
-            "command": {
-                "missing": "Command not found."
-            },
-            "internal": "Internal error \"%0\"."
-        }
+        "command": {
+            "missing": "Command '%0' not found."
+        },
+        "error": "Internal error \"%0\"."
     },
     "on": {
         "detail": {
@@ -19,11 +18,13 @@
             "place": "%0 is a place.",
             "item": "%0 is an item.",
             "alias": "\"%1\", alias \"@%0\"",
+            "script": "`%0`: when %1, do %2",
             "all": {
                 "charas": "%0 is a character.",
                 "places": "%0 is a place.",
                 "items": "%0 is an item.",
                 "alias": "\"%1\", alias \"@%0\"",
+                "scripts": "`%0` upon %1",
                 "empty": "There is none..."
             }
         },
@@ -34,7 +35,10 @@
                 "new": "%0x new %1 created!",
                 "old": "There exist now %0x %1 in total."
             },
+            "script": "Created `%0`: when %1, do %2",
             "alias": "You can now use \"@%0\" instead of \"%1\""
+        },
+        "edit": {
         },
         "remove": {
             "chara": "%0 left the game.",
@@ -57,7 +61,7 @@
             "new": "%0 moved to %1",
             "old": "%0 is already in %1"
         },
-        "done": "Done!"
+        "done": "Done! (%&)"
     },
     "c": {
         "*": "everything"

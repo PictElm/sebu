@@ -1,6 +1,6 @@
 module.exports = class Helper {
 
-    constructor(database, host="localhost", user="root", password="") {
+    constructor(database, host="localhost", user="root", password="", callback=null) {
         this.mysql = require('mysql');
         this.conn = this.mysql.createConnection({
             host: host,
@@ -10,7 +10,11 @@ module.exports = class Helper {
         });
 
         let log = (tag, txt) => this.log(tag, txt);
-        this.conn.connect(function(err) { if (err) throw err; log('hay', "Connected"); });
+        this.conn.connect(function(err) {
+            if (err) throw err;
+            log('hay', "Connected");
+            if (callback) callback();
+        });
     }
 
     stop() {
@@ -61,6 +65,7 @@ module.exports = class Helper {
         //    template = template.replace("%" + k, values[k])
         return (template || "").toString()
                 .replace(/%([0-9]+)/g, (m, k) => values[k] || m).replace("%%", "%")
+                .replace("%&", values.join(", "))
                 .replace(/\$([0-9]+)/g, "\x1b[$1m").replace("$$", "$");
     }
 
@@ -69,12 +74,10 @@ module.exports = class Helper {
         console.log(this.format(`$2[${tag}]: $35${text}$0`, val));
     }
 
-    /*query(sql, then, error = (err) => { throw err; }) {
-        this.conn.query(sql, function(err, result) {
-            if (err) error(err)
-            then(result);
-        });
-    }*/
+    splitOnce(text, separator) {
+        let k = text.indexOf(separator);
+        return [ text.substring(0, k), text.substring(k + separator.length) ];
+    }
 
     where(obj) {
         if (!obj) return "";
