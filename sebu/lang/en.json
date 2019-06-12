@@ -45,11 +45,13 @@
             "place": "%0 is only a memory.",
             "item": "%0x %1 were destroyed.",
             "alias": "%0 no longer designate anything.",
+            "script": "%0 is no longer usable.",
             "all": {
                 "charas": "Wiped the world of its people.",
                 "places": "Wiped the world of itself.",
                 "items": "Nothing's left.",
-                "alias": "..."
+                "alias": "...",
+                "scripts": "."
             },
             "everything": "New empty universe."
         },
@@ -61,7 +63,21 @@
             "new": "%0 moved to %1",
             "old": "%0 is already in %1"
         },
+        "script": "Scripted %1 with %0.",
+        "unscript": "Removed %0 from %1' scripts.",
         "done": "Done! (%&)"
+    },
+    "sep": {
+        "nb": "x ",
+        "alias": " for ",
+        "script": {
+            "action": " do ",
+            "trigger": " when ",
+            "affect": " with "
+        },
+        "desc": ", ",
+        "give": " to ",
+        "move": " to "
     },
     "c": {
         "*": "everything"

@@ -98,7 +98,7 @@ module.exports = class Helper {
         });
     }
 
-    async insert(table, obj) {
+    insert(table, obj) {
         let keys = [], values = [];
         for (let key in obj) {
             keys.push(`\`${key}\``);
@@ -108,11 +108,11 @@ module.exports = class Helper {
         return this.query(`INSERT INTO ${table} (${keys.join(", ")}) VALUES (${values.join(", ")})`)
     }
 
-    async select(table, where) {
+    select(table, where) {
         return this.query(`SELECT * FROM ${table} ${this.where(where)}`);
     }
 
-    async update(table, where, obj) {
+    update(table, where, obj) {
         let paires = [];
         for (let key in obj)
             paires.push(`\`${key}\` = '${obj[key]}'`);
@@ -120,7 +120,7 @@ module.exports = class Helper {
         return this.query(`UPDATE ${table} SET ${paires.join(", ")} ${this.where(where)}`);
     }
 
-    async delete(table, where) {
+    delete(table, where) {
         return this.query(`DELETE FROM ${table} ${this.where(where)}`);
     }
 

@@ -58,6 +58,18 @@
         },
         "done": "Fait ! (%&)"
     },
+    "sep": {
+        "nb": "x ",
+        "alias": " pour ",
+        "script": {
+            "action": " faire ",
+            "trigger": " quand ",
+            "affect": " avec "
+        },
+        "desc": ", ",
+        "give": " à ",
+        "move": " à "
+    },
     "c": {
         "*": "everything",
         "detailer": "detail",
