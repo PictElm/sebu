@@ -17,14 +17,14 @@
             "chara": "%0 is a character.",
             "place": "%0 is a place.",
             "item": "%0 is an item.",
-            "alias": "\"%1\", alias \"@%0\"",
-            "script": "`%0`: when %1, do %2",
+            "alias": "\"%1\", alias \"@%0\".",
+            "script": "`%0`: when %1, do %2.",
             "all": {
                 "charas": "%0 is a character.",
                 "places": "%0 is a place.",
                 "items": "%0 is an item.",
-                "alias": "\"%1\", alias \"@%0\"",
-                "scripts": "`%0` upon %1",
+                "alias": "\"%1\", alias \"@%0\".",
+                "scripts": "`%0` when %1.",
                 "empty": "There is none..."
             }
         },
@@ -35,8 +35,8 @@
                 "new": "%0x new %1 created!",
                 "old": "There exist now %0x %1 in total."
             },
-            "script": "Created `%0`: when %1, do %2",
-            "alias": "You can now use \"@%0\" instead of \"%1\""
+            "script": "Created `%0`: when %1, do %2.",
+            "alias": "You can now use \"@%0\" instead of \"%1\"!"
         },
         "edit": {
         },
@@ -44,7 +44,7 @@
             "chara": "%0 left the game.",
             "place": "%0 is only a memory.",
             "item": "%0x %1 were destroyed.",
-            "alias": "%0 no longer designate anything.",
+            "alias": "@%0 no longer designate anything.",
             "script": "%0 is no longer usable.",
             "all": {
                 "charas": "Wiped the world of its people.",
@@ -77,6 +77,7 @@
         },
         "desc": ", ",
         "give": " to ",
+        "take": " from ",
         "move": " to "
     },
     "c": {

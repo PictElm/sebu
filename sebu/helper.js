@@ -12,7 +12,7 @@ module.exports = class Helper {
         let log = (tag, txt) => this.log(tag, txt);
         this.conn.connect(function(err) {
             if (err) throw err;
-            log('hay', "Connected");
+            log('hay', "Connected!");
             if (callback) callback();
         });
     }
@@ -61,8 +61,6 @@ module.exports = class Helper {
      * @returns a string formatted with the given template and values
      */
     format(template, ...values) { // TODO: highly optimisable
-        //for (let k in values)
-        //    template = template.replace("%" + k, values[k])
         return (template || "").toString()
                 .replace(/%([0-9]+)/g, (m, k) => values[k] || m).replace("%%", "%")
                 .replace("%&", values.join(", "))
@@ -70,11 +68,12 @@ module.exports = class Helper {
     }
 
     log(tag, text, ...val) {
-        //console.log(this.format(`\x1b[2m[${tag}]: \x1b[35m${text}\x1b[0m`, val));
         console.log(this.format(`$2[${tag}]: $35${text}$0`, val));
     }
 
     splitOnce(text, separator) {
+        if (!text.includes(separator)) return [ text, null ];
+
         let k = text.indexOf(separator);
         return [ text.substring(0, k), text.substring(k + separator.length) ];
     }
@@ -102,7 +101,7 @@ module.exports = class Helper {
         let keys = [], values = [];
         for (let key in obj) {
             keys.push(`\`${key}\``);
-            values.push(`'${obj[key]}'`); // this.conn.escape
+            values.push(`'${obj[key]}'`); // TODO: see `this.conn.escape`
         }
 
         return this.query(`INSERT INTO ${table} (${keys.join(", ")}) VALUES (${values.join(", ")})`)

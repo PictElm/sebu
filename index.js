@@ -7,8 +7,8 @@ process.stdin.on('data', function(data) {
     if (data.startsWith("exit")) {
         console.log("User input complete, program exit.");
         engine.stop();
-        process.exit();
-    } else engine.process(data, message => console.log(`<sebu>: ${message.replace("\n", "\n        ")}`));
+        process.exit(0);
+    } else engine.process(data, message => console.log(`<sebu>: ${message.replace(/\n/g, "\n        ")}`));
 });
 
 /*-*/

@@ -17,34 +17,40 @@
             "chara": "%0 est un personage.",
             "place": "%0 est un lieu.",
             "item": "%0 est un objet.",
-            "alias": "\"%1\", alias \"@%0\"",
+            "alias": "\"%1\", alias \"@%0\".",
+            "script": "`%0` lorsque '%1', fait : %2.",
             "all": {
                 "charas": "%0 est un personage.",
                 "places": "%0 est un lieu.",
                 "items": "%0 est un objet.",
                 "alias": "\"%1\", alias \"@%0\"",
+                "scripts": "`%0` lorsque '%1'",
                 "empty": "Il n'y en a pas..."
             }
         },
         "create": {
-            "chara": "%0 rejoint la partie!",
-            "place": "%0 est maintenant un quelque part!",
+            "chara": "%0 rejoint la partie !",
+            "place": "%0 est maintenant un quelque part !",
             "item": {
-                "new": "%0x nouveaux %1 on été crées!",
+                "new": "%0x nouveaux %1 on été crées !",
                 "old": "Il existe maintenant %0x %1 au total."
             },
-            "alias": "Tu peut maintenant utiliser \"@%0\" à la place de \"%1\""
+            "scripts": "Créer `%0` : lorsque '%1', fait : %2.",
+            "alias": "Tu peut maintenant utiliser \"@%0\" à la place de \"%1\" !"
+        },
+        "edit": {
         },
         "remove": {
             "chara": "%0 quite la partie.",
             "place": "%0 est seulement un souvenir.",
             "item": "%0x %1 ont été détruit.",
-            "alias": "%0 ne désigne plus rien.",
+            "alias": "@%0 ne désigne plus rien.",
             "all": {
                 "charas": "Nantissement des peuples du monde.",
                 "places": "Nantissement du monde lui-même.",
                 "items": "Il ne rest rien.",
-                "alias": "..."
+                "alias": "...",
+                "scripts": "."
             },
             "everything": "Nouvel univers vide."
         },
@@ -56,6 +62,8 @@
             "new": "%0 s'est déplacé vers %1",
             "old": "%0 est déjà à %1"
         },
+        "script": "%1 scripté avec %0.",
+        "unscript": "Retiré %0 des scripts de %1.",
         "done": "Fait ! (%&)"
     },
     "sep": {
@@ -68,6 +76,7 @@
         },
         "desc": ", ",
         "give": " à ",
+        "take": " de ",
         "move": " à "
     },
     "c": {
