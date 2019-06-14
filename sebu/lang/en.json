@@ -3,12 +3,13 @@
     "msg": {
         "hi": "Hi!",
         "lang": {
-            "missing": "Translation to %0 not found.",
-            "empty": "Translation file to %0 is empty.",
+            "missing": "Translation to '%0' not found.",
+            "empty": "Translation file to '%0' is empty.",
             "untranslated": "Missing translation for '%0'."
         },
         "command": {
-            "missing": "Command '%0' not found."
+            "missing": "Command '%0' not found.",
+            "malformed": "Wrong usage of command '%0'."
         },
         "error": "Internal error \"%0\"."
     },
@@ -68,6 +69,8 @@
         "done": "Done! (%&)"
     },
     "sep": {
+        "prefix": "sebu, ",
+        "separator": " then ",
         "nb": "x ",
         "alias": " for ",
         "script": {

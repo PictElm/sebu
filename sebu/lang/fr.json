@@ -3,12 +3,13 @@
     "msg": {
         "hi": "Salut !",
         "lang": {
-            "missing": "Traduction en %0 non trouvable.",
-            "empty": "Fichier de traduction en %0 vide.",
+            "missing": "Traduction en '%0' non trouvable.",
+            "empty": "Fichier de traduction en '%0' vide.",
             "untranslated": "Traduction manquante pour '%0'."
         },
         "command": {
-            "missing": "Commande non trouvée."
+            "missing": "Commande non trouvée.",
+            "malformed": "Mauvais usage de la commande '%0'."
         },
         "error": "Erreur interne \"%0\"."
     },
@@ -67,6 +68,8 @@
         "done": "Fait ! (%&)"
     },
     "sep": {
+        "prefix": "sebu, ",
+        "separator": " puis ",
         "nb": "x ",
         "alias": " pour ",
         "script": {

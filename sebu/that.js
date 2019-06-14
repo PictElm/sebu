@@ -2,6 +2,9 @@ exports.Engine = class Sebu {
 
     constructor(database, host="localhost", user="root", password="") {
         this.dico = require('./lang/en.json');
+        this.prefix = this.dico.sep.prefix || "sebu, ";
+        this.separator = this.dico.sep.separator || " then ";
+
         this.alias = {};
 
         const Helper = require('./helper.js');
@@ -9,8 +12,6 @@ exports.Engine = class Sebu {
             () => this.helper.select('Alias').then(r => r.forEach(v => this.alias[v.key] = v.value))
         );
 
-        this.prefix = "sebu, ";
-        this.separator = " // ";
         this.commands = require('./commands.js');
     }
 
@@ -28,13 +29,26 @@ exports.Engine = class Sebu {
                     break;
 
                 case 'lang':
-                    try {
-                        this.dico = require('./lang/' + args[1] + '.json');
-                    } catch (err) {
-                        output(this.dico.msg.lang.missing, args[1]);
-                        return false;
+                    if (args[1] == "*") {
+                        require('fs').readdir('./sebu/lang/', (err, files) => {
+                            if (err) return output(err);
+                            output(files.reduce((acc, cur) => acc + (cur.endsWith('.json') ? (acc?"\n":"") + cur.substring(0, cur.length - 5) : ""), ""));
+                        });
+                    } else {
+                        try {
+                            let newDico = require('./lang/' + args[1] + '.json');
+                            if (newDico) {
+                                if (!newDico.sep) newDico.sep = this.dico.sep;
+                                this.dico = newDico;
+
+                                if (this.dico.sep.prefix) this.prefix = this.dico.sep.prefix;
+                                if (this.dico.sep.separator) this.separator = this.dico.sep.separator;
+                            } else output(this.dico.msg.lang.empty);
+                        } catch (err) {
+                            output(this.dico.msg.lang.missing, args[1]);
+                        }
+                        output(!this.dico.hi ? `Missing CRUCIAL translation \`msg.hi\` (jk, lang changed to '${args[1]}').` : this.dico.msg.hi);
                     }
-                    output(!this.dico ? this.dico.msg.lang.empty : this.dico.msg.hi);
                     break;
 
                 default: return args;
@@ -103,7 +117,7 @@ exports.Engine = class Sebu {
                 this.helper.log('pre', `${comm.name} ( ${comm.args} )`);
                 return output(this.helper.format(this.dico.msg.command.missing, comm.name));
             }
-        }
+        } return output(this.helper.format(this.dico.msg.command.malformed, comm.name));
     }
 
     evaluateExpression(expr) {

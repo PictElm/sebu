@@ -94,7 +94,7 @@ module.exports = class Helper {
 
         return new Promise((resolve, reject) => {
             this.conn.query(sql, null, (err, rows) => err ? reject(err) : resolve(rows));
-        });
+        }).catch(err => this.log('sql', `$31${err.stack}`));
     }
 
     insert(table, obj) {

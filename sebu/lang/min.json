@@ -1,0 +1,21 @@
+{
+    "msg": {
+        "lang": {},
+        "command": {}
+    },
+    "on": {
+        "detail": {
+            "all": {}
+        },
+        "create": {
+            "item": {}
+        },
+        "edit": {},
+        "remove": {
+            "all": {}
+        },
+        "give": {},
+        "take": {},
+        "move": {}
+    }
+}
