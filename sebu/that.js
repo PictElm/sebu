@@ -23,12 +23,7 @@ exports.Engine = class Sebu {
         if (input.startsWith(this.prefix)) {
             var args = this.aliasReplace(input.replace(this.prefix, "")).split(" ");
 
-            switch (args[0]) {
-                case 'help':
-                    output(this.dico.help);
-                    break;
-
-                case 'lang':
+            if (args[0] == 'lang') {
                     if (args[1] == "*") {
                         require('fs').readdir('./sebu/lang/', (err, files) => {
                             if (err) return output(err);
@@ -47,12 +42,9 @@ exports.Engine = class Sebu {
                         } catch (err) {
                             output(this.dico.msg.lang.missing, args[1]);
                         }
-                        output(!this.dico.hi ? `Missing CRUCIAL translation \`msg.hi\` (jk, lang changed to '${args[1]}').` : this.dico.msg.hi);
+                        output(!this.dico.msg.hi ? `Missing CRUCIAL translation \`msg.hi\` (jk, lang changed to '${args[1]}').` : this.dico.msg.hi);
                     }
-                    break;
-
-                default: return args;
-            }
+            } else return args;
         }
         return false;
     }
@@ -82,6 +74,7 @@ exports.Engine = class Sebu {
         };
         for (let k = 0; k < args.length; k++) {
             let next = this.dico.c && this.dico.c.hasOwnProperty(args[k]) ? this.dico.c[args[k]] : args[k];
+
             comm.name+= "." + next;
             comm.c = comm.c[next];
 
@@ -94,7 +87,7 @@ exports.Engine = class Sebu {
                         rawOut: output,
                         buffer: [],
                         def: { t: this.dico.msg.lang.untranslated, v: [ `${comm.name} ( ${comm.args} )` ] },
-                        write: (t, ...v) => messaging.buffer.push(t ? this.helper.format(t, ...v) : this.helper.format(messaging.def.t, ...messaging.def.v)),
+                        write: (t, ...v) => messaging.buffer.push(t ? this.helper.format(t, ...v) : this.helper.format(messaging.def.t, ...(v || messaging.def.v))), // TODO: rework message indicating missing translation
                         send: (t, ...v) => {
                             if (!messaging.buffer.length) messaging.write(t || this.dico.on.done, ...v);
                             output(messaging.buffer.join("\n"));

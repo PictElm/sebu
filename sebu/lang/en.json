@@ -1,5 +1,5 @@
 {
-    "help": "501, go read the fu**** code",
+    "help": "501, go read the fu**** code!",
     "msg": {
         "hi": "Hi!",
         "lang": {
@@ -9,7 +9,8 @@
         },
         "command": {
             "missing": "Command '%0' not found.",
-            "malformed": "Wrong usage of command '%0'."
+            "malformed": "Wrong usage of command '%0'.",
+            "usage": "Usage: '%1'."
         },
         "error": "Internal error \"%0\"."
     },

@@ -1,5 +1,5 @@
 {
-    "help": "501, vas lire le pu**** de code",
+    "help": "501, vas lire le pu**** de code !",
     "msg": {
         "hi": "Salut !",
         "lang": {
@@ -9,7 +9,8 @@
         },
         "command": {
             "missing": "Commande non trouvée.",
-            "malformed": "Mauvais usage de la commande '%0'."
+            "malformed": "Mauvais usage de la commande '%0'.",
+            "usage": "Utilisation: '%1'."
         },
         "error": "Erreur interne \"%0\"."
     },
@@ -46,6 +47,7 @@
             "place": "%0 est seulement un souvenir.",
             "item": "%0x %1 ont été détruit.",
             "alias": "@%0 ne désigne plus rien.",
+            "script": "%0 n'est plus utilisable.",
             "all": {
                 "charas": "Nantissement des peuples du monde.",
                 "places": "Nantissement du monde lui-même.",
@@ -84,18 +86,19 @@
     },
     "c": {
         "*": "everything",
-        "detailer": "detail",
-           "creer": "create",
-          "donner": "give",
-        "deplacer": "move",
-           "perso": "chara",
-            "lieu": "place",
-           "objet": "item",
-          "persos": "charas",
-           "lieux": "places",
-          "objets": "items",
-          "chaque": "all",
-            "tout": "everything",
-          "editer": "edit"
+        "aide": "help",
+        "detaile": "detail",
+        "cree": "create",
+        "edite": "edit",
+        "donne": "give",
+        "deplace": "move",
+        "perso": "chara",
+        "lieu": "place",
+        "objet": "item",
+        "persos": "charas",
+        "lieux": "places",
+        "objets": "items",
+        "chaque": "all",
+        "tout": "everything"
     }
 }

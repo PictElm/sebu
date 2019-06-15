@@ -72,10 +72,19 @@ module.exports = class Helper {
     }
 
     splitOnce(text, separator) {
+        if (!test) return [ null, null ];
         if (!text.includes(separator)) return [ text, null ];
 
         let k = text.indexOf(separator);
         return [ text.substring(0, k), text.substring(k + separator.length) ];
+    }
+
+    toDicoLang(text, dico) {
+        //this.log('tdl', `$36translated: ${text}`);
+        for (let wordInLang in dico)
+            text = text.replace(RegExp(`( |^)(${dico[wordInLang]})( |$)`, "gi"), `$1${wordInLang}$3`);
+        //this.log('tdl', `$36untranslated: ${text}`);
+        return text;
     }
 
     where(obj) {
