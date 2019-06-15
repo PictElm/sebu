@@ -70,8 +70,6 @@
         "done": "Fait ! (%&)"
     },
     "sep": {
-        "prefix": "sebu, ",
-        "separator": " puis ",
         "nb": "x ",
         "alias": " pour ",
         "script": {

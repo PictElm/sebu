@@ -1,18 +1,43 @@
-exports.Engine = class Sebu {
+module.exports = class Engine {
 
-    constructor(database, host="localhost", user="root", password="") {
-        this.dico = require('./lang/en.json');
-        this.prefix = this.dico.sep.prefix || "sebu, ";
-        this.separator = this.dico.sep.separator || " then ";
+    constructor(config=null, callback=null) {
+        if (!config || config instanceof Function) {
+            callback = config;
+            config = './config.json';
+        }
+
+        if (!config.prefix) {
+            this.config = require(config);
+            this.configFileName = config;
+        } else {
+            this.config = config;
+            this.configFileName = null;
+        }
+
+        this.dico = require(`./lang/${this.config.lang || 'en'}.json`);
+        this.commands = require('./commands.js');
 
         this.alias = {};
+        this.helper = new (require('./helper.js'))(
+            this.config.db.database, this.config.db.host, this.config.db.user, this.config.db.password,
+            err => {
+                if (err) {
+                    console.log("Config settings: " + JSON.stringify(this.config, null, 2));
+                    if (!callback) throw err;
+                    return callback(err);
+                }
 
-        const Helper = require('./helper.js');
-        this.helper = new Helper(database, host, user, password,
-            () => this.helper.select('Alias').then(r => r.forEach(v => this.alias[v.key] = v.value))
+                this.helper.select('Alias')
+                        .catch(err => {
+                            if (callback) callback(err);
+                            else throw err;
+                        })
+                        .then(r => {
+                            if (r) r.forEach(v => this.alias[v.key] = v.value);
+                            if (callback) callback(null);
+                        });
+            }
         );
-
-        this.commands = require('./commands.js');
     }
 
     aliasReplace(message) {
@@ -20,33 +45,45 @@ exports.Engine = class Sebu {
     }
 
     preprocess(input, output) {
-        if (input.startsWith(this.prefix)) {
-            var args = this.aliasReplace(input.replace(this.prefix, "")).split(" ");
+        var args = this.aliasReplace(input.replace(this.config.prefix, "")).split(" ");
 
-            if (args[0] == 'lang') {
-                    if (args[1] == "*") {
-                        require('fs').readdir('./sebu/lang/', (err, files) => {
-                            if (err) return output(err);
-                            output(files.reduce((acc, cur) => acc + (cur.endsWith('.json') ? (acc?"\n":"") + cur.substring(0, cur.length - 5) : ""), ""));
-                        });
-                    } else {
-                        try {
-                            let newDico = require('./lang/' + args[1] + '.json');
-                            if (newDico) {
-                                if (!newDico.sep) newDico.sep = this.dico.sep;
-                                this.dico = newDico;
+        if (args[0] == 'lang') {
+            if (!args[1] || args[1] == "*") {
+                output(`Current lang: ${this.dico.lang}.`)
+                require('fs').readdir('./sebu/lang/', (err, files) => {
+                    if (err) return output(err);
+                    output(files.reduce((acc, cur) => acc + (cur.endsWith('.json') ? (acc?"\n":"") + cur.substring(0, cur.length - 5) : ""), ""));
+                });
+            } else {
+                try {
+                    let newDico = require('./lang/' + args[1] + '.json');
+                    if (newDico) {
+                        if (!newDico.sep)
+                            newDico.sep = this.dico.sep;
+                        this.dico = newDico;
+                        this.dico.lang = args[1];
+                    } else output(this.dico.msg.lang.empty);
+                } catch (err) {
+                    output(this.dico.msg.lang.missing, args[1]);
+                }
+                output(!this.dico.msg.hi ? `Missing CRUCIAL translation \`msg.hi\` (jk, lang changed to '${args[1]}').` : this.dico.msg.hi);
+            }
+        } else if (args[0] == 'config') {
+            if (!args[1] || args[1] == "*") {
+                let omitted = { host: true, user: true, password: true };
+                output(JSON.stringify(this.config, (k, v) => omitted[k] ? "***" : v, 2));
+            } else {
+                let key_value = this.helper.splitOnce(args.slice(1).join(" "), "=");
 
-                                if (this.dico.sep.prefix) this.prefix = this.dico.sep.prefix;
-                                if (this.dico.sep.separator) this.separator = this.dico.sep.separator;
-                            } else output(this.dico.msg.lang.empty);
-                        } catch (err) {
-                            output(this.dico.msg.lang.missing, args[1]);
-                        }
-                        output(!this.dico.msg.hi ? `Missing CRUCIAL translation \`msg.hi\` (jk, lang changed to '${args[1]}').` : this.dico.msg.hi);
-                    }
-            } else return args;
-        }
-        return false;
+                let key = key_value[0].trim();
+                let value = key_value[1] ? key_value[1].trim() : undefined;
+
+                if (this.config[key] && key != 'db') {
+                    if (value) this.config[key] = value;
+                    output(`config.${key} = ${this.config[key]}`);
+                } else output(`${key} is not a valid key.`);
+            }
+        } else return args;
     }
 
     /**
@@ -56,15 +93,17 @@ exports.Engine = class Sebu {
      * @param {Function} output function taking the result string from the command
      */
     process(input, output) {
-        if (input.includes(this.separator)) {
+        if (!input.startsWith(this.config.prefix)) return false;
+
+        if (input.includes(this.config.separator)) {
             let r = [];
-            input.split(this.separator).forEach(part =>
-                r.push(this.process(part.startsWith(this.prefix) ? part : this.prefix + part, output))
+            input.split(this.config.separator).forEach(part =>
+                r.push(this.process(part.startsWith(this.config.prefix) ? part : this.config.prefix + part, output))
             );
             return r;
         }
 
-        var args = this.preprocess(input, output);
+        var args = this.preprocess(input.trim(), output);
         if (!args) return false;
 
         var comm = {
@@ -177,7 +216,7 @@ exports.Engine = class Sebu {
         if (action) {
             action = action.trim();
             this.helper.log('scr', `Execute action '${action}'.`);
-            this.process(action.startsWith(this.prefix) ? action : this.prefix + action, output);
+            this.process(action.startsWith(this.config.prefix) ? action : this.config.prefix + action, output);
         }
     }
 
@@ -192,8 +231,13 @@ exports.Engine = class Sebu {
         });
     }
 
-    stop() {
-        this.helper.stop();
+    pause(callback) { // TODO: update configs (save to `configFileName` -- null if config passed in constructor was config object)
+        if (callback) callback("This function does nothing :D");
+    }
+
+    stop(callback) {
+        this.pause();
+        this.helper.stop(callback);
     }
 
 }

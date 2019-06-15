@@ -1,0 +1,11 @@
+{
+    "db": {
+        "database": "sebu",
+        "host": "localhost",
+        "user": "root",
+        "password": ""
+    },
+    "prefix": "sebu, ",
+    "separator": " ~~ ",
+    "lang": "en"
+}

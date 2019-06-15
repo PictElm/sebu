@@ -61,6 +61,10 @@
             "new": "%0 receive %1x %2.",
             "old": "%0 now have %1x %2."
         },
+        "take": {
+            "new": "took %1x %2 from %0.",
+            "old": "%0 now have %1x %2."
+        },
         "move": {
             "new": "%0 moved to %1",
             "old": "%0 is already in %1"
@@ -70,8 +74,6 @@
         "done": "Done! (%&)"
     },
     "sep": {
-        "prefix": "sebu, ",
-        "separator": " then ",
         "nb": "x ",
         "alias": " for ",
         "script": {

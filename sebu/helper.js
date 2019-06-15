@@ -1,8 +1,7 @@
 module.exports = class Helper {
 
     constructor(database, host="localhost", user="root", password="", callback=null) {
-        this.mysql = require('mysql');
-        this.conn = this.mysql.createConnection({
+        this.conn = require('mysql').createConnection({
             host: host,
             database: database,
             user: user,
@@ -11,14 +10,18 @@ module.exports = class Helper {
 
         let log = (tag, txt) => this.log(tag, txt);
         this.conn.connect(function(err) {
-            if (err) throw err;
-            log('hay', "Connected!");
-            if (callback) callback();
+            if (err) {
+                if (callback) callback(err);
+                else throw err;
+            } else {
+                log('hay', "Connected!");
+                if (callback) callback();
+            }
         });
     }
 
-    stop() {
-        this.conn.end();
+    stop(callback) {
+        this.conn.end(callback);
     }
 
     /**
@@ -72,7 +75,7 @@ module.exports = class Helper {
     }
 
     splitOnce(text, separator) {
-        if (!test) return [ null, null ];
+        if (!text) return [ null, null ];
         if (!text.includes(separator)) return [ text, null ];
 
         let k = text.indexOf(separator);
@@ -80,10 +83,8 @@ module.exports = class Helper {
     }
 
     toDicoLang(text, dico) {
-        //this.log('tdl', `$36translated: ${text}`);
         for (let wordInLang in dico)
-            text = text.replace(RegExp(`( |^)(${dico[wordInLang]})( |$)`, "gi"), `$1${wordInLang}$3`);
-        //this.log('tdl', `$36untranslated: ${text}`);
+            text = text.replace(RegExp(`([ \[\]]|^)(${dico[wordInLang]})([ \[\]]|$)`, "gi"), `$1${wordInLang}$3`);
         return text;
     }
 
@@ -92,13 +93,13 @@ module.exports = class Helper {
 
         let builder = [];
         for (let key in obj)
-            builder.push(`\`${key}\` = '${obj[key]}'`);
+            builder.push(`\`${key}\` = '${obj[key]}'`); // TODO: see `this.conn.escape` -> create encapsulation
 
         return "WHERE " + builder.join(" AND ");
     }
 
     query(sql) {
-        sql = sql.replace(";", "-");
+        sql = sql.replace(";", "?");
         this.log('sql', sql);
 
         return new Promise((resolve, reject) => {
@@ -110,7 +111,7 @@ module.exports = class Helper {
         let keys = [], values = [];
         for (let key in obj) {
             keys.push(`\`${key}\``);
-            values.push(`'${obj[key]}'`); // TODO: see `this.conn.escape`
+            values.push(`'${obj[key]}'`); // TODO: see `this.conn.escape` -> create encapsulation
         }
 
         return this.query(`INSERT INTO ${table} (${keys.join(", ")}) VALUES (${values.join(", ")})`)
@@ -123,7 +124,7 @@ module.exports = class Helper {
     update(table, where, obj) {
         let paires = [];
         for (let key in obj)
-            paires.push(`\`${key}\` = '${obj[key]}'`);
+            paires.push(`\`${key}\` = '${obj[key]}'`); // TODO: see `this.conn.escape` -> create encapsulation
 
         return this.query(`UPDATE ${table} SET ${paires.join(", ")} ${this.where(where)}`);
     }

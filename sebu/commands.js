@@ -1,13 +1,14 @@
 module.exports = {
+
     help: function(q, m, o, t) {
         if (!m) return o.send(t.dico.help);
-        if (!o) return q.toDicoLang("help _command_", t.dico.c);
+        if (!o) return q.toDicoLang("help [* | _command_]", t.dico.c);
 
         let targetName = "";
         let targetComm = module.exports;
         let targetHelp = t.dico.help;
 
-        if (m == "*" || m == t.dico.c["*"]) {
+        if (m == "*") {
             targetName+= ".everything";
             targetHelp = targetHelp.everything;
         } else m.split(" ").forEach(arg => {
@@ -18,7 +19,6 @@ module.exports = {
             targetHelp = targetHelp ? targetHelp[next] : undefined;
         });
 
-        q.log('hlp', `$32commands${targetName}`);
         o.write(targetHelp, "help" + targetName);
         let unpack = sub => {
             if (sub instanceof Function) {
@@ -28,6 +28,8 @@ module.exports = {
         unpack(targetComm);
         o.send();
     },
+    lang: (q, m, o, t) => "lang [* | _choice_]",
+    config: (q, m, o, t) => "config [* | _setting key_ [= _new value_]]",
     detail: {
         chara: function (q, m, o, t) {
             if (!o) return q.toDicoLang("detail chara _name_", t.dico.c);
@@ -334,6 +336,7 @@ module.exports = {
         if (!o) return q.toDicoLang(`execute _script name_`, t.dico.c);
         q.select('Scripts', { name: m }).then(rows => t.exec(rows[0].action));
     }
+
 };
 
 /*-*/
